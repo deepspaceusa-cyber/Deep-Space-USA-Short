@@ -9,19 +9,20 @@ urllib3_cn.allowed_gai_family = allowed_gai_family
 import moviepy.editor as mpe
 from moviepy.editor import VideoFileClip, AudioFileClip, CompositeAudioClip, CompositeVideoClip, TextClip, concatenate_videoclips, vfx, afx, ImageClip, ColorClip
 
-HINDI_FONT_FILE = "Hindi.ttf"
+# 👇 UPDATE: Changed from Hindi.ttf to standard English bold font for Shorts
+FONT_FILE = "Impact.ttf" # Aap Arial.ttf bhi use kar sakte hain
 
-full_text = os.environ.get('FULL_TEXT', 'Ek baar ki baat hai.')
+full_text = os.environ.get('FULL_TEXT', 'Once upon a time in the universe.')
 chat_id = os.environ.get('CHAT_ID')
 pexels_key = os.environ.get('PEXELS_API_KEY')
 scenes_data = json.loads(os.environ.get('SCENES_DATA', '[]'))
-title = os.environ.get('TITLE', 'Deep Space Mystery #Shorts')
-youtube_description = os.environ.get('YOUTUBE_DESC', 'Discover the mysteries of the universe.')
+title = os.environ.get('TITLE', 'Cosmic Horror Mystery #Shorts')
+youtube_description = os.environ.get('YOUTUBE_DESC', 'Discover the terrifying mysteries of the universe.')
 
 print(f"Total Scenes to render: {len(scenes_data)}")
 
-# 1. AI Voiceover - MADHUR (MALE VOICE)
-subprocess.run(['edge-tts', '--voice', 'hi-IN-MadhurNeural', '--text', full_text, '--write-media', 'voiceover.mp3'])
+# 👇 UPDATE: Changed from Hindi Voice to US English Cosmic Horror Voice 👇
+subprocess.run(['edge-tts', '--voice', 'en-US-ChristopherNeural', '--text', full_text, '--write-media', 'voiceover.mp3'])
 
 voiceover = AudioFileClip("voiceover.mp3")
 
@@ -80,10 +81,10 @@ for i, scene in enumerate(scenes_data):
             current_color = viral_colors[w_i % len(viral_colors)]
             
             # Adjusted text size for Vertical video
-            bg_txt = TextClip(chunk, fontsize=120, color='black', font=HINDI_FONT_FILE, stroke_color='black', stroke_width=18, method='caption', size=(950, None))
+            bg_txt = TextClip(chunk, fontsize=120, color='black', font=FONT_FILE, stroke_color='black', stroke_width=18, method='caption', size=(950, None))
             bg_txt = bg_txt.set_position(('center', 'center')).set_duration(duration_per_chunk).set_start(w_i * duration_per_chunk)
             
-            main_txt = TextClip(chunk, fontsize=120, color=current_color, font=HINDI_FONT_FILE, stroke_color='black', stroke_width=3, method='caption', size=(950, None))
+            main_txt = TextClip(chunk, fontsize=120, color=current_color, font=FONT_FILE, stroke_color='black', stroke_width=3, method='caption', size=(950, None))
             main_txt = main_txt.set_position(('center', 'center')).set_duration(duration_per_chunk).set_start(w_i * duration_per_chunk)
             
             word_clips.extend([bg_txt, main_txt])
@@ -160,7 +161,7 @@ if not video_link.startswith("http"):
 print(f"🔥 FINAL YOUTUBE LINK: {video_link} 🔥")
 
 # NAYA TOKEN YAHAN ADD HO GAYA HAI
-BOT_TOKEN = "8832893599:AAEk3jxy3r7HvQRn6GTIXUtj0w1FgL0SYWs" 
+BOT_TOKEN = "8574888838:AAH9zsrSoW7T1PL9Wsf5E6vtnT4EzkBv1Cs" 
 
 message_text = f"READY_TO_UPLOAD\n{video_link}\n{title}\n{youtube_description}"
 
